@@ -49,8 +49,8 @@ class DBHelper {
     final client = await db;
     return client.insert('bookmarks', {
       'tvname': show.name,
-      'image': show.image,
-      'rating': show.rating,
+      'image': show.image.original,
+      'rating': show.rating.average?.toString() ?? '',
     });
   }
 

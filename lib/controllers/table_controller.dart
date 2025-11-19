@@ -14,16 +14,17 @@ class TableController extends GetxController {
   }
 
   Future<void> fetchAPITablePremiere() async {
-    const url =
-        'https://api.tvmaze.com/shows';
+    const url = 'https://api.tvmaze.com/shows';
     try {
       isLoading.value = true;
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
-        final List listShows = data['show'];
+
+        // API returns a top-level array. Decode as List.
+        final List listShows = data is List ? data : (data['show'] ?? []);
+
         tableStandings.assignAll(
           listShows.map((e) => Welcome.fromJson(e)).toList(),
         );

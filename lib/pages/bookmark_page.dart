@@ -24,12 +24,14 @@ class BookmarkPage extends StatelessWidget {
             return Card(
               child: ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: NetworkImage(item['badge']),
+                  backgroundImage: item['image'] != null && item['image'].toString().isNotEmpty
+                      ? NetworkImage(item['image'])
+                      : null,
                 ),
-                title: Text(item['teamName']),
-                subtitle: Text(item['stadium']),
+                title: Text(item['tvname'] ?? ''),
+                subtitle: Text('Rating: ${item['rating'] ?? '-'}'),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     controller.deleteBookmark(item['id']);
                   },
